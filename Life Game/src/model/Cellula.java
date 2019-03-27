@@ -4,13 +4,24 @@ public class Cellula {
 	
 	private int posizioneX;
 	private int posizioneY;
-	private String statoIniziale;
-	private String statoFuturo;
+	private int statoIniziale;
+	private int statoFuturo;
+
+	public static class StatiCellula {
+
+		public static final int MORTA = 0;
+		public static final int VIVA = 1;
+		public static final int VIVRA = 2;
+		public static final int NASCERA = 3;
+		public static final int MORIRA = 4;
+
+	}
 	
 	public Cellula() {
 	}
 
-	public Cellula(int posizioneX, int posizioneY, String statoIniziale, String statoFuturo) {
+
+	public Cellula(int posizioneX, int posizioneY, int statoIniziale, int statoFuturo) {
 		super();
 		this.posizioneX = posizioneX;
 		this.posizioneY = posizioneY;
@@ -19,31 +30,46 @@ public class Cellula {
 	}
 	
 	
+	public Cellula(Cellula c) {
+		this.posizioneX = c.getPosizioneX();
+		this.posizioneY = c.getPosizioneY();
+		this.statoIniziale = c.getStatoIniziale();
+		this.statoFuturo = c.statoFuturo;
+	}
+
 	public int getPosizioneX() {
-		return posizioneX;
+		return this.posizioneX;
 	}
 	public void setPosizioneX(int posizioneX) {
 		this.posizioneX = posizioneX;
 	}
 	public int getPosizioneY() {
-		return posizioneY;
+		return this.posizioneY;
 	}
 	public void setPosizioneY(int posizioneY) {
 		this.posizioneY = posizioneY;
 	}
-	public String getStatoIniziale() {
-		return statoIniziale;
+
+	public int getStatoIniziale() {
+		return this.statoIniziale;
 	}
-	public void setStatoIniziale(String statoIniziale) {
+
+	public void setStatoIniziale(int statoIniziale) {
 		this.statoIniziale = statoIniziale;
 	}
-	public String getStatoFuturo() {
-		return statoFuturo;
+
+	public int getStatoFuturo() {
+		return this.statoFuturo;
 	}
-	public void setStatoFuturo(String statoFuturo) {
+
+	public void setStatoFuturo(int statoFuturo) {
 		this.statoFuturo = statoFuturo;
 	}
 
+	@Override
+	public String toString() {
+		return "Cellula [posizioneX=" + this.posizioneX + ", posizioneY=" + this.posizioneY + ", statoIniziale=" + this.statoIniziale + ", statoFuturo=" + this.statoFuturo + "]";
+	}
 
 
 }
