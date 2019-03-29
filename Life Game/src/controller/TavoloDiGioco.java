@@ -115,14 +115,16 @@ public class TavoloDiGioco extends PApplet {
 	public void key_life(String life_key, int limiteX, int limiteY) {
 
 		int i = 0;
+		int randomX = (int) random(0 + limiteX, Setting.LATO_CELL_X - limiteX);
+		int randomY = (int) random(0 + limiteY, Setting.LATO_CELL_Y - limiteY);
 		for (int y = 0; y < limiteY; y++) {
 			for (int x = 0; x < limiteX; x++) {
 				char lettera = life_key.charAt(i);
 				int dna = Character.getNumericValue(lettera);
 				if (dna == 1) {
 					Cellula c = new Cellula();
-					c.setPosizioneX(x);
-					c.setPosizioneY(y);
+					c.setPosizioneX(x + randomX);
+					c.setPosizioneY(y + randomY);
 					c.setStatoIniziale(Cellula.StatiCellula.VIVA);
 					Matrice.getIstance().piantaCellula(c);
 					this.drawCellula(c);
