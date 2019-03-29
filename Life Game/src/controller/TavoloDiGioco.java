@@ -1,9 +1,9 @@
 package controller;
+
 import model.Cellula;
 import model.GardenCellula;
 import model.Matrice;
 import processing.core.PApplet;
-import utility.FormazioniGioco;
 import utility.Setting;
 
 public class TavoloDiGioco extends PApplet {
@@ -21,16 +21,29 @@ public class TavoloDiGioco extends PApplet {
 	public void setup() {
 		background(0);
 		this.disegnaGrigliaGioco();
-		key_life(FormazioniGioco.LIFE_KEY_ALBERTO, 5, 4);
 	}
 
 	@Override
 	public void draw() {
-		this.disegnaGrigliaGioco();
-		avanzaGenerazione();
-		delay(100);
-		startVita();
+		// this.disegnaGrigliaGioco();
+		// // avanzaGenerazione();
+		// // delay(100);
+		// // startVita();
+		// settaCellula();
 	}	
+
+	@Override
+	public void mousePressed() {
+
+		Cellula c = new Cellula();
+		if (this.mouseButton == LEFT) {
+			c.setPosizioneX(this.mouseX / Setting.LATO_CELL_X);
+			c.setPosizioneY(this.mouseY / Setting.LATO_CELL_Y);
+			c.setStatoIniziale(Cellula.StatiCellula.VIVA);
+			drawCellula(c);
+			Matrice.getIstance().piantaCellula(c);
+		}
+	}
 
 	private void startVita() {
 		Cellula[][] m = Matrice.getIstance().getTable();
@@ -40,8 +53,6 @@ public class TavoloDiGioco extends PApplet {
 			}
 		}
 	}
-
-
 
 	private void disegnaGrigliaGioco() {
 		stroke(255, 150);
@@ -115,8 +126,8 @@ public class TavoloDiGioco extends PApplet {
 	public void key_life(String life_key, int limiteX, int limiteY) {
 
 		int i = 0;
-		int randomX = (int) random(0 + limiteX, Setting.LATO_CELL_X - limiteX);
-		int randomY = (int) random(0 + limiteY, Setting.LATO_CELL_Y - limiteY);
+		int randomX = (int) random(0 + limiteX, Setting.CELL_PER_LATO_X - limiteX);
+		int randomY = (int) random(0 + limiteY, Setting.CELL_PER_LATO_Y - limiteY);
 		for (int y = 0; y < limiteY; y++) {
 			for (int x = 0; x < limiteX; x++) {
 				char lettera = life_key.charAt(i);
@@ -127,11 +138,11 @@ public class TavoloDiGioco extends PApplet {
 					c.setPosizioneY(y + randomY);
 					c.setStatoIniziale(Cellula.StatiCellula.VIVA);
 					Matrice.getIstance().piantaCellula(c);
-					this.drawCellula(c);
-					System.out.println(c);
 				}
 				i++;
 			}
 		}
 	}
+
+
 }
