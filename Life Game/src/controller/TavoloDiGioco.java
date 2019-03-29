@@ -3,6 +3,7 @@ import model.Cellula;
 import model.GardenCellula;
 import model.Matrice;
 import processing.core.PApplet;
+import utility.FormazioniGioco;
 import utility.Setting;
 
 public class TavoloDiGioco extends PApplet {
@@ -20,31 +21,15 @@ public class TavoloDiGioco extends PApplet {
 	public void setup() {
 		background(0);
 		this.disegnaGrigliaGioco();
-		genesi();
-
-		// startVita();
-		// avanzaGenerazione();
-		// for (int y = 0; y < Setting.CELL_PER_LATO_Y; y++) {
-		// for (int x = 0; x < Setting.CELL_PER_LATO_X; x++) {
-		// calcoloStatoFuturo(m[x][y]);
-		// }
-		// }
-		//
-		// Matrice.getIstance().stampaMatriceFuturo();
-		//
-		// avanzaGenerazione();
-		//
-		// Matrice.getIstance().stampaMatriceIniziale();
-		// System.out.println();
+		key_life(FormazioniGioco.LIFE_KEY_ALBERTO, 5, 4);
 	}
 
 	@Override
 	public void draw() {
-		background(0);
 		this.disegnaGrigliaGioco();
-		startVita();
-		delay(1000);
 		avanzaGenerazione();
+		delay(100);
+		startVita();
 	}	
 
 	private void startVita() {
@@ -55,40 +40,8 @@ public class TavoloDiGioco extends PApplet {
 			}
 		}
 	}
-	private void genesi() {
-		Cellula c = new Cellula();
-		int start_x = (int) (random(0, Setting.CELL_PER_LATO_X - 1));
-		int start_y = (int) (random(0, Setting.CELL_PER_LATO_Y - 1));
-		c.setPosizioneX(start_x);
-		c.setPosizioneY(start_y);
-		c.setStatoIniziale(Cellula.StatiCellula.VIVA);
-		Matrice.getIstance().piantaCellula(c);
-		this.drawCellula(c);
 
-		c.setPosizioneX(start_x - 1);
-		c.setPosizioneY(start_y);
-		c.setStatoIniziale(Cellula.StatiCellula.VIVA);
-		Matrice.getIstance().piantaCellula(c);
-		this.drawCellula(c);
 
-		c.setPosizioneX(start_x);
-		c.setPosizioneY(start_y + 1);
-		c.setStatoIniziale(Cellula.StatiCellula.VIVA);
-		Matrice.getIstance().piantaCellula(c);
-		this.drawCellula(c);
-
-		c.setPosizioneX(start_x);
-		c.setPosizioneY(start_y - 1);
-		c.setStatoIniziale(Cellula.StatiCellula.VIVA);
-		Matrice.getIstance().piantaCellula(c);
-		this.drawCellula(c);
-
-		c.setPosizioneX(start_x + 1);
-		c.setPosizioneY(start_y - 1);
-		c.setStatoIniziale(Cellula.StatiCellula.VIVA);
-		Matrice.getIstance().piantaCellula(c);
-		this.drawCellula(c);
-	}
 
 	private void disegnaGrigliaGioco() {
 		stroke(255, 150);
@@ -104,7 +57,7 @@ public class TavoloDiGioco extends PApplet {
 		if (c.getStatoIniziale() == Cellula.StatiCellula.MORTA) {
 			fill(0);
 		} else {
-			fill(255, 150, 0);
+			fill(33, 209, 0);
 		}
 		rect(c.getPosizioneX() * Setting.LATO_CELL_X, c.getPosizioneY() * Setting.LATO_CELL_Y, Setting.LATO_CELL_X, Setting.LATO_CELL_Y);
 	}
@@ -118,6 +71,7 @@ public class TavoloDiGioco extends PApplet {
 				celluleVive = celluleVive + m[x][y].getStatoIniziale();
 			}
 		}
+
 		if (c.getStatoIniziale() == Cellula.StatiCellula.VIVA) {
 			celluleVive -= 1;
 		}
@@ -128,6 +82,7 @@ public class TavoloDiGioco extends PApplet {
 				c.setStatoFuturo(Cellula.StatiCellula.VIVRA);
 			}
 		} else if (c.getStatoIniziale() == Cellula.StatiCellula.MORTA) {
+
 			if (celluleVive == 3) {
 				c.setStatoFuturo(Cellula.StatiCellula.NASCERA);
 			} else {
@@ -154,6 +109,27 @@ public class TavoloDiGioco extends PApplet {
 				drawCellula(m[x][y]);
 			}
 
+		}
+	}
+
+	public void key_life(String life_key, int limiteX, int limiteY) {
+
+		int i = 0;
+		for (int y = 0; y < limiteY; y++) {
+			for (int x = 0; x < limiteX; x++) {
+				char lettera = life_key.charAt(i);
+				int dna = Character.getNumericValue(lettera);
+				if (dna == 1) {
+					Cellula c = new Cellula();
+					c.setPosizioneX(x);
+					c.setPosizioneY(y);
+					c.setStatoIniziale(Cellula.StatiCellula.VIVA);
+					Matrice.getIstance().piantaCellula(c);
+					this.drawCellula(c);
+					System.out.println(c);
+				}
+				i++;
+			}
 		}
 	}
 }

@@ -18,7 +18,7 @@ public class Matrice {
 	private Matrice() {
 		for (int x = 0; x < Setting.CELL_PER_LATO_X; x++) {
 			for (int y = 0; y < Setting.CELL_PER_LATO_Y; y++) {
-				this.table[x][y] = new Cellula(x * Setting.LATO_CELL_X, y * Setting.CELL_PER_LATO_Y, Cellula.StatiCellula.MORTA, Cellula.StatiCellula.MORTA);
+				this.table[x][y] = new Cellula(x, y, Cellula.StatiCellula.MORTA, Cellula.StatiCellula.MORTA);
 			}
 		}
 	}

@@ -22,7 +22,6 @@ public class Cellula {
 
 
 	public Cellula(int posizioneX, int posizioneY, int statoIniziale, int statoFuturo) {
-		super();
 		this.posizioneX = posizioneX;
 		this.posizioneY = posizioneY;
 		this.statoIniziale = statoIniziale;
@@ -34,7 +33,7 @@ public class Cellula {
 		this.posizioneX = c.getPosizioneX();
 		this.posizioneY = c.getPosizioneY();
 		this.statoIniziale = c.getStatoIniziale();
-		this.statoFuturo = c.statoFuturo;
+		this.statoFuturo = c.getStatoFuturo();
 	}
 
 	public int getPosizioneX() {
