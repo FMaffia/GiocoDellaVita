@@ -4,10 +4,17 @@ import model.Cellula;
 import model.GardenCellula;
 import model.Matrice;
 import processing.core.PApplet;
+import processing.core.PImage;
+import utility.FormazioniGioco;
 import utility.Setting;
 
 public class TavoloDiGioco extends PApplet {
-
+	public boolean start = false;
+	public int imgWidth=50;
+	public int imgHeight=50;
+	public int partenzaImgX = 750;
+	public int partenzaImgY = 700;
+	PImage img;
 
 	public static void main(String[] args) { 
 		PApplet.main("controller.TavoloDiGioco"); 
@@ -15,25 +22,34 @@ public class TavoloDiGioco extends PApplet {
 
 	@Override
 	public void settings() {
-		size(Setting.WIDTH, Setting.HEIGHT);
+		size(Setting.WIDTH, Setting.HEIGHT+50);
 	}
 	@Override
 	public void setup() {
 		background(0);
 		this.disegnaGrigliaGioco();
+		//key_life(FormazioniGioco.LIFE_KEY_TONY, 4, 4);
+		img = loadImage("start.png");
+
 	}
 
 	@Override
 	public void draw() {
-		// this.disegnaGrigliaGioco();
-		// // avanzaGenerazione();
-		// // delay(100);
-		// // startVita();
-		// settaCellula();
+		this.disegnaGrigliaGioco();
+		image(img,partenzaImgX,partenzaImgY, imgWidth,imgHeight);
+		
+		if(mousePressed==true && mouseX > partenzaImgX && mouseX < partenzaImgX +imgWidth && mouseY > partenzaImgY && mouseY <700 + partenzaImgY){
+			start = true;
+		}
+		if(start == true) {
+			avanzaGenerazione();
+			delay(100);
+			startVita();
+		}
 	}	
 
 	@Override
-	public void mousePressed() {
+	public void mouseDragged() {
 
 		Cellula c = new Cellula();
 		if (this.mouseButton == LEFT) {
@@ -42,8 +58,17 @@ public class TavoloDiGioco extends PApplet {
 			c.setStatoIniziale(Cellula.StatiCellula.VIVA);
 			drawCellula(c);
 			Matrice.getIstance().piantaCellula(c);
+		} else {
+			c.setPosizioneX(this.mouseX / Setting.LATO_CELL_X);
+			c.setPosizioneY(this.mouseY / Setting.LATO_CELL_Y);
+			c.setStatoIniziale(Cellula.StatiCellula.MORTA);
+			drawCellula(c);
+			Matrice.getIstance().piantaCellula(c);	
 		}
 	}
+
+
+
 
 	private void startVita() {
 		Cellula[][] m = Matrice.getIstance().getTable();
